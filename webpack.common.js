@@ -12,7 +12,7 @@ module.exports = {
     clean: true,
   },
   devServer: {
-    watchFiles: ["./src/template.html"],
+    watchFiles: ["./src/html/index.html"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -25,6 +25,22 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(?:js|mjs|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            targets: "defaults",
+            presets: [
+              ['@babel/preset-env']
+            ]
+          }
+        }
+      }
     ],
+  },
+  stats: {
+    loggingDebug: ["babel-loader"]
   },
 };
